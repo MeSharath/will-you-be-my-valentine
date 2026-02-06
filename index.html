@@ -134,7 +134,11 @@
             box-shadow:
                 0 4px 15px rgba(0, 0, 0, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: absolute;
+        }
+
+        .btn-no.escaped {
+            position: fixed;
+            z-index: 50;
         }
 
         .btn-no:hover {
@@ -251,14 +255,42 @@
 
         @media (max-width: 600px) {
             .glass-card {
-                padding: 40px 30px;
+                padding: 40px 25px;
+                margin: 10px;
+                border-radius: 25px;
             }
             .question {
-                font-size: 2rem;
+                font-size: 1.6rem;
+                margin-bottom: 35px;
+            }
+            .buttons {
+                gap: 20px;
             }
             .btn {
-                padding: 15px 35px;
-                font-size: 1.2rem;
+                padding: 14px 30px;
+                font-size: 1.1rem;
+            }
+            .btn-no.escaped {
+                padding: 14px 30px;
+                font-size: 1.1rem;
+            }
+            .message {
+                font-size: 1.4rem;
+                padding: 20px;
+            }
+            .big-hearts {
+                font-size: 2.5rem;
+            }
+            .security-message {
+                padding: 30px 20px;
+                margin: 20px;
+                border-radius: 20px;
+            }
+            .security-message h2 {
+                font-size: 1.5rem;
+            }
+            .security-message p {
+                font-size: 1rem;
             }
         }
     </style>
@@ -320,12 +352,21 @@
 
         // Move No button to random position
         function moveNoButton() {
-            const padding = 100;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            // Add escaped class on first move to enable fixed positioning
+            if (!noBtn.classList.contains('escaped')) {
+                noBtn.classList.add('escaped');
+            }
 
-            const randomX = padding + Math.random() * maxX;
-            const randomY = padding + Math.random() * maxY;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            const padding = 20;
+
+            // Use viewport dimensions for mobile compatibility
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            const randomX = padding + Math.random() * Math.max(0, maxX - padding);
+            const randomY = padding + Math.random() * Math.max(0, maxY - padding);
 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
@@ -334,6 +375,7 @@
         // Handle No button interaction
         function handleNoInteraction(e) {
             e.preventDefault();
+            e.stopPropagation();
             noWasClicked = true;
             noClickCount++;
 
@@ -408,11 +450,6 @@
 
         // Initialize
         createFloatingHearts();
-
-        // Position No button initially (relative to buttons container)
-        const buttonsRect = document.querySelector('.buttons').getBoundingClientRect();
-        noBtn.style.left = (buttonsRect.left + 200) + 'px';
-        noBtn.style.top = buttonsRect.top + 'px';
     </script>
 </body>
 </html>
