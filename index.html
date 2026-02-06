@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,10 +16,18 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffb6c1 0%, #ff69b4 50%, #ff1493 100%);
-            font-family: 'Georgia', serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a855f7, #ff6b6b, #ec4899);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .floating-hearts {
@@ -32,14 +43,15 @@
         .heart {
             position: absolute;
             font-size: 20px;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.4;
+            filter: blur(1px);
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
 
@@ -54,12 +66,27 @@
             padding: 20px;
         }
 
-        .question {
-            font-size: 3rem;
-            color: #8b0000;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
-            margin-bottom: 50px;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 60px 80px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
             text-align: center;
+        }
+
+        .question {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.2),
+                0 0 40px rgba(255, 255, 255, 0.3);
+            margin-bottom: 50px;
         }
 
         .buttons {
@@ -70,31 +97,51 @@
         }
 
         .btn {
-            padding: 15px 40px;
-            font-size: 1.5rem;
+            padding: 18px 50px;
+            font-size: 1.4rem;
+            font-weight: 600;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-family: inherit;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .btn-yes {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.8), rgba(236, 72, 153, 0.8));
             color: white;
-            box-shadow: 0 4px 15px rgba(238, 90, 90, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow:
+                0 4px 20px rgba(236, 72, 153, 0.4),
+                0 0 30px rgba(255, 107, 107, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .btn-yes:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(238, 90, 90, 0.6);
+            transform: scale(1.08);
+            box-shadow:
+                0 6px 30px rgba(236, 72, 153, 0.6),
+                0 0 50px rgba(255, 107, 107, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
 
         .btn-no {
-            background: linear-gradient(135deg, #a0a0a0, #808080);
+            background: rgba(150, 150, 150, 0.3);
             color: white;
-            box-shadow: 0 4px 15px rgba(128, 128, 128, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
             position: absolute;
+        }
+
+        .btn-no:hover {
+            background: rgba(150, 150, 150, 0.4);
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .message-overlay {
@@ -103,7 +150,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -117,11 +166,13 @@
 
         .message {
             font-size: 2rem;
+            font-weight: 600;
             color: white;
             text-align: center;
             padding: 40px;
             max-width: 600px;
             animation: fadeIn 1s ease-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         @keyframes fadeIn {
@@ -154,17 +205,24 @@
 
         .countdown {
             font-size: 1.2rem;
-            color: #ffb6c1;
+            color: #fecfef;
             margin-top: 20px;
+            font-weight: 500;
         }
 
         .security-message {
             display: none;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            padding: 40px;
-            border-radius: 20px;
+            background: rgba(44, 62, 80, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px;
+            border-radius: 25px;
             max-width: 700px;
             text-align: center;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .security-message.active {
@@ -175,6 +233,7 @@
         .security-message h2 {
             color: #e74c3c;
             font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 20px;
         }
 
@@ -189,16 +248,31 @@
             color: #3498db;
             font-size: 1rem;
         }
+
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 40px 30px;
+            }
+            .question {
+                font-size: 2rem;
+            }
+            .btn {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="floating-hearts" id="floatingHearts"></div>
 
     <div class="container" id="mainContainer">
-        <h1 class="question">Will you be my Valentine? 💕</h1>
-        <div class="buttons">
-            <button class="btn btn-yes" id="yesBtn">Yes</button>
-            <button class="btn btn-no" id="noBtn">No</button>
+        <div class="glass-card">
+            <h1 class="question">Will you be my Valentine? 💕</h1>
+            <div class="buttons">
+                <button class="btn btn-yes" id="yesBtn">Yes</button>
+                <button class="btn btn-no" id="noBtn">No</button>
+            </div>
         </div>
     </div>
 
@@ -233,12 +307,12 @@
         // Create floating hearts background
         function createFloatingHearts() {
             const hearts = ['💕', '💖', '💗', '💓', '💝', '❤️', '💘'];
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 15; i++) {
                 const heart = document.createElement('span');
                 heart.className = 'heart';
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 6 + 's';
+                heart.style.animationDelay = Math.random() * 8 + 's';
                 heart.style.fontSize = (15 + Math.random() * 20) + 'px';
                 floatingHearts.appendChild(heart);
             }
@@ -327,8 +401,7 @@
             }, 5000);
         }
 
-        // Event listeners
-        noBtn.addEventListener('mouseenter', handleNoInteraction);
+        // Event listeners - click only for No button (removed mouseenter)
         noBtn.addEventListener('click', handleNoInteraction);
         noBtn.addEventListener('touchstart', handleNoInteraction);
         yesBtn.addEventListener('click', handleYes);
