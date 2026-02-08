@@ -207,52 +207,6 @@
             to { transform: scale(1.2); }
         }
 
-        .countdown {
-            font-size: 1.2rem;
-            color: #fecfef;
-            margin-top: 20px;
-            font-weight: 500;
-        }
-
-        .security-message {
-            display: none;
-            background: rgba(44, 62, 80, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px;
-            border-radius: 25px;
-            max-width: 700px;
-            text-align: center;
-            box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .security-message.active {
-            display: block;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .security-message h2 {
-            color: #e74c3c;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .security-message p {
-            color: #ecf0f1;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .security-message .redirect-notice {
-            color: #3498db;
-            font-size: 1rem;
-        }
-
         @media (max-width: 600px) {
             .glass-card {
                 padding: 40px 25px;
@@ -281,17 +235,6 @@
             .big-hearts {
                 font-size: 2.5rem;
             }
-            .security-message {
-                padding: 30px 20px;
-                margin: 20px;
-                border-radius: 20px;
-            }
-            .security-message h2 {
-                font-size: 1.5rem;
-            }
-            .security-message p {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
@@ -311,7 +254,6 @@
     <div class="message-overlay" id="overlay">
         <div class="message" id="messageText"></div>
         <div class="big-hearts" id="bigHearts">💖💕💗💓💝</div>
-        <div class="countdown" id="countdown"></div>
     </div>
 
     <script>
@@ -326,8 +268,6 @@
         const overlay = document.getElementById('overlay');
         const messageText = document.getElementById('messageText');
         const bigHearts = document.getElementById('bigHearts');
-        const countdown = document.getElementById('countdown');
-        const securityMessage = document.getElementById('securityMessage');
         const floatingHearts = document.getElementById('floatingHearts');
 
         // Create floating hearts background
@@ -408,33 +348,6 @@
             }
 
             createConfetti();
-
-            // Start countdown
-            let secondsLeft = 10;
-            countdown.textContent = `${secondsLeft} seconds...`;
-
-            const countdownInterval = setInterval(() => {
-                secondsLeft--;
-                countdown.textContent = `${secondsLeft} seconds...`;
-
-                if (secondsLeft <= 0) {
-                    clearInterval(countdownInterval);
-                    showSecurityMessage();
-                }
-            }, 1000);
-        }
-
-        // Show security message and redirect
-        function showSecurityMessage() {
-            messageText.style.display = 'none';
-            bigHearts.style.display = 'none';
-            countdown.style.display = 'none';
-            securityMessage.classList.add('active');
-
-            // Redirect after 5 seconds
-            setTimeout(() => {
-                window.location.href = 'https://phishingquiz.withgoogle.com/';
-            }, 5000);
         }
 
         // Event listeners - click only for No button (removed mouseenter)
